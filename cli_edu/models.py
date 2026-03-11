@@ -27,6 +27,7 @@ class SessionConfig:
     min_age: int
     max_age: int
     count: int
+    locale: str = "en"
     seed: int | None = None
 
     @property

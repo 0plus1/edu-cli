@@ -5,6 +5,7 @@ from dataclasses import dataclass, replace
 
 import click
 
+from cli_edu.i18n import Translator
 from cli_edu.models import Problem, SessionConfig, SessionSummary
 
 ORANGE = "\033[38;5;208m"
@@ -37,12 +38,16 @@ def score_color(percentage: float) -> str:
     return "green"
 
 
-def render_progress(current: int, total: int) -> str:
+def render_progress(
+    translator: Translator,
+    current: int,
+    total: int,
+) -> str:
     bar = make_bar(current, total)
-    return f"Progress {current}/{total} {bar}"
+    return translator.t("session.progress", current=current, total=total, bar=bar)
 
 
-def render_accuracy(correct: int, answered: int) -> str:
+def render_accuracy(translator: Translator, correct: int, answered: int) -> str:
     if answered == 0:
         percentage = 0.0
     else:
@@ -50,7 +55,7 @@ def render_accuracy(correct: int, answered: int) -> str:
 
     bar = make_bar(round(percentage), 100)
     color = score_color(percentage)
-    line = f"Accuracy {percentage:>5.1f}% {bar}"
+    line = translator.t("session.accuracy", percentage=percentage, bar=bar)
 
     if color == "red":
         return click.style(line, fg="red")
@@ -67,6 +72,7 @@ def format_duration(seconds: float) -> str:
 
 
 def ask_question(
+    translator: Translator,
     index: int,
     total: int,
     correct: int,
@@ -74,40 +80,56 @@ def ask_question(
 ) -> QuestionResult:
     answered = index - 1
     click.echo()
-    click.secho(render_progress(index, total), fg="cyan")
-    click.echo(render_accuracy(correct, answered))
-    click.echo(f"Question {index}: [{problem.skill}] {problem.prompt}")
+    click.secho(render_progress(translator, index, total), fg="cyan")
+    click.echo(render_accuracy(translator, correct, answered))
+    click.echo(
+        translator.t(
+            "session.question",
+            index=index,
+            skill=problem.skill,
+            prompt=problem.prompt,
+        )
+    )
 
     started_at = time.perf_counter()
-    answer = click.prompt("Your answer", type=int)
+    answer = click.prompt(translator.t("session.answer_prompt"), type=int)
     duration_seconds = time.perf_counter() - started_at
     is_correct = answer == problem.answer
 
     if is_correct:
-        click.secho("Correct!", fg="green")
+        click.secho(translator.t("session.correct"), fg="green")
     else:
         click.secho(
-            f"Not quite. The right answer is {problem.answer}.",
+            translator.t("session.incorrect", answer=problem.answer),
             fg="red",
         )
 
     updated_correct = correct + int(is_correct)
-    click.echo(render_accuracy(updated_correct, index))
-    click.echo(f"Time for this question: {format_duration(duration_seconds)}")
+    click.echo(render_accuracy(translator, updated_correct, index))
+    click.echo(
+        translator.t(
+            "session.question_time",
+            duration=format_duration(duration_seconds),
+        )
+    )
     return QuestionResult(
         is_correct=is_correct,
         duration_seconds=duration_seconds,
     )
 
 
-def run_session(problems: list[Problem], config: SessionConfig) -> SessionSummary:
+def run_session(
+    problems: list[Problem],
+    config: SessionConfig,
+    translator: Translator,
+) -> SessionSummary:
     session_started_at = time.perf_counter()
     click.secho(
-        f"Starting maths practice for ages {config.age_label}",
+        translator.t("session.start", age_label=config.age_label),
         fg="blue",
         bold=True,
     )
-    click.echo(f"Total questions: {config.count}")
+    click.echo(translator.t("session.total_questions", count=config.count))
 
     summary = SessionSummary(
         total=config.count,
@@ -117,7 +139,13 @@ def run_session(problems: list[Problem], config: SessionConfig) -> SessionSummar
     )
 
     for index, problem in enumerate(problems, start=1):
-        result = ask_question(index, config.count, summary.correct, problem)
+        result = ask_question(
+            translator,
+            index,
+            config.count,
+            summary.correct,
+            problem,
+        )
         updated_correct = summary.correct + int(result.is_correct)
         summary = replace(
             summary,
@@ -132,12 +160,30 @@ def run_session(problems: list[Problem], config: SessionConfig) -> SessionSummar
     summary = replace(summary, total_duration_seconds=total_duration_seconds)
     percentage = (summary.correct / summary.total) * 100
     click.echo()
-    click.secho("Session complete", fg="blue", bold=True)
-    click.echo(render_accuracy(summary.correct, summary.total))
-    click.echo(f"Final score: {summary.correct}/{summary.total} ({percentage:.1f}%)")
-    click.echo(f"Total time: {format_duration(summary.total_duration_seconds)}")
+    click.secho(translator.t("session.complete"), fg="blue", bold=True)
+    click.echo(render_accuracy(translator, summary.correct, summary.total))
+    click.echo(
+        translator.t(
+            "session.final_score",
+            correct=summary.correct,
+            total=summary.total,
+            percentage=percentage,
+        )
+    )
+    click.echo(
+        translator.t(
+            "session.total_time",
+            duration=format_duration(summary.total_duration_seconds),
+        )
+    )
 
     for index, duration in enumerate(summary.question_durations_seconds, start=1):
-        click.echo(f"Question {index} time: {format_duration(duration)}")
+        click.echo(
+            translator.t(
+                "session.per_question_time",
+                index=index,
+                duration=format_duration(duration),
+            )
+        )
 
     return summary

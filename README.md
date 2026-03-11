@@ -16,11 +16,18 @@ Or launch a session directly:
 uv run cli-edu --age 9 --min-age 8 --max-age 10 --count 8 --seed 7
 ```
 
+Italian locale:
+
+```bash
+uv run cli-edu --locale it
+```
+
 ## What it does
 
 - Uses age bands to choose suitable arithmetic and word problems.
 - Asks each question interactively before moving on.
 - Shows progress, a live accuracy bar, and time spent per question and per session.
+- Supports English and Italian through the CLI `--locale` option.
 
 ## Quality checks
 
