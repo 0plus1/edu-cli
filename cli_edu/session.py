@@ -1,0 +1,143 @@
+from __future__ import annotations
+
+import time
+from dataclasses import dataclass, replace
+
+import click
+
+from cli_edu.models import Problem, SessionConfig, SessionSummary
+
+ORANGE = "\033[38;5;208m"
+RESET = "\033[0m"
+
+
+@dataclass(frozen=True)
+class QuestionResult:
+    is_correct: bool
+    duration_seconds: float
+
+
+def colored(text: str, color: str) -> str:
+    if not click.get_current_context().color:
+        return text
+    return f"{color}{text}{RESET}"
+
+
+def make_bar(completed: int, total: int, width: int = 20) -> str:
+    safe_total = max(total, 1)
+    filled = round(width * completed / safe_total)
+    return f"[{'#' * filled}{'-' * (width - filled)}]"
+
+
+def score_color(percentage: float) -> str:
+    if percentage < 40:
+        return "red"
+    if percentage < 70:
+        return ORANGE
+    return "green"
+
+
+def render_progress(current: int, total: int) -> str:
+    bar = make_bar(current, total)
+    return f"Progress {current}/{total} {bar}"
+
+
+def render_accuracy(correct: int, answered: int) -> str:
+    if answered == 0:
+        percentage = 0.0
+    else:
+        percentage = (correct / answered) * 100
+
+    bar = make_bar(round(percentage), 100)
+    color = score_color(percentage)
+    line = f"Accuracy {percentage:>5.1f}% {bar}"
+
+    if color == "red":
+        return click.style(line, fg="red")
+    if color == "green":
+        return click.style(line, fg="green")
+    return colored(line, ORANGE)
+
+
+def format_duration(seconds: float) -> str:
+    minutes, remainder = divmod(seconds, 60)
+    if minutes >= 1:
+        return f"{int(minutes)}m {remainder:.1f}s"
+    return f"{remainder:.1f}s"
+
+
+def ask_question(
+    index: int,
+    total: int,
+    correct: int,
+    problem: Problem,
+) -> QuestionResult:
+    answered = index - 1
+    click.echo()
+    click.secho(render_progress(index, total), fg="cyan")
+    click.echo(render_accuracy(correct, answered))
+    click.echo(f"Question {index}: [{problem.skill}] {problem.prompt}")
+
+    started_at = time.perf_counter()
+    answer = click.prompt("Your answer", type=int)
+    duration_seconds = time.perf_counter() - started_at
+    is_correct = answer == problem.answer
+
+    if is_correct:
+        click.secho("Correct!", fg="green")
+    else:
+        click.secho(
+            f"Not quite. The right answer is {problem.answer}.",
+            fg="red",
+        )
+
+    updated_correct = correct + int(is_correct)
+    click.echo(render_accuracy(updated_correct, index))
+    click.echo(f"Time for this question: {format_duration(duration_seconds)}")
+    return QuestionResult(
+        is_correct=is_correct,
+        duration_seconds=duration_seconds,
+    )
+
+
+def run_session(problems: list[Problem], config: SessionConfig) -> SessionSummary:
+    session_started_at = time.perf_counter()
+    click.secho(
+        f"Starting maths practice for ages {config.age_label}",
+        fg="blue",
+        bold=True,
+    )
+    click.echo(f"Total questions: {config.count}")
+
+    summary = SessionSummary(
+        total=config.count,
+        correct=0,
+        total_duration_seconds=0.0,
+        question_durations_seconds=(),
+    )
+
+    for index, problem in enumerate(problems, start=1):
+        result = ask_question(index, config.count, summary.correct, problem)
+        updated_correct = summary.correct + int(result.is_correct)
+        summary = replace(
+            summary,
+            correct=updated_correct,
+            question_durations_seconds=(
+                *summary.question_durations_seconds,
+                result.duration_seconds,
+            ),
+        )
+
+    total_duration_seconds = time.perf_counter() - session_started_at
+    summary = replace(summary, total_duration_seconds=total_duration_seconds)
+    percentage = (summary.correct / summary.total) * 100
+    click.echo()
+    click.secho("Session complete", fg="blue", bold=True)
+    click.echo(render_accuracy(summary.correct, summary.total))
+    click.echo(f"Final score: {summary.correct}/{summary.total} ({percentage:.1f}%)")
+    click.echo(f"Total time: {format_duration(summary.total_duration_seconds)}")
+
+    for index, duration in enumerate(summary.question_durations_seconds, start=1):
+        click.echo(f"Question {index} time: {format_duration(duration)}")
+
+    return summary
