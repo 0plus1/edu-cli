@@ -6,7 +6,7 @@ from dataclasses import dataclass, replace
 import click
 
 from cli_edu.i18n import Translator
-from cli_edu.models import Problem, SessionConfig, SessionSummary
+from cli_edu.models import Question, SessionConfig, SessionSummary
 
 ORANGE = "\033[38;5;208m"
 RESET = "\033[0m"
@@ -76,31 +76,40 @@ def ask_question(
     index: int,
     total: int,
     correct: int,
-    problem: Problem,
+    question: Question,
 ) -> QuestionResult:
     answered = index - 1
     click.echo()
     click.secho(render_progress(translator, index, total), fg="cyan")
     click.echo(render_accuracy(translator, correct, answered))
+    if question.passage_text is not None:
+        click.secho(translator.t("session.passage_header"), fg="blue")
+        if question.passage_title is not None:
+            click.echo(translator.t("session.passage_title", title=question.passage_title))
+        click.echo(question.passage_text)
+        click.echo()
     click.echo(
         translator.t(
             "session.question",
             index=index,
-            skill=problem.skill,
-            prompt=problem.prompt,
+            skill=question.skill,
+            prompt=question.prompt,
         )
     )
+    for choice in question.choices:
+        click.echo(choice)
 
     started_at = time.perf_counter()
-    answer = click.prompt(translator.t("session.answer_prompt"), type=int)
+    answer = click.prompt(translator.t("session.answer_prompt"), type=str).strip()
     duration_seconds = time.perf_counter() - started_at
-    is_correct = answer == problem.answer
+    normalized_answer = answer.lower()
+    is_correct = normalized_answer in question.accepted_answers
 
     if is_correct:
         click.secho(translator.t("session.correct"), fg="green")
     else:
         click.secho(
-            translator.t("session.incorrect", answer=problem.answer),
+            translator.t("session.incorrect", answer=question.correct_answer),
             fg="red",
         )
 
@@ -119,13 +128,17 @@ def ask_question(
 
 
 def run_session(
-    problems: list[Problem],
+    questions: list[Question],
     config: SessionConfig,
     translator: Translator,
 ) -> SessionSummary:
     session_started_at = time.perf_counter()
     click.secho(
-        translator.t("session.start", age_label=config.age_label),
+        translator.t(
+            "session.start",
+            exercise_type=translator.t(f"exercise.{config.exercise_type}").lower(),
+            age_label=config.age_label,
+        ),
         fg="blue",
         bold=True,
     )
@@ -138,13 +151,28 @@ def run_session(
         question_durations_seconds=(),
     )
 
-    for index, problem in enumerate(problems, start=1):
+    shown_passages: set[str] = set()
+    for index, question in enumerate(questions, start=1):
+        if question.passage_id is not None and question.passage_id in shown_passages:
+            question = Question(
+                prompt=question.prompt,
+                accepted_answers=question.accepted_answers,
+                correct_answer=question.correct_answer,
+                skill=question.skill,
+                choices=question.choices,
+                passage_id=question.passage_id,
+                passage_title=None,
+                passage_text=None,
+            )
+        elif question.passage_id is not None:
+            shown_passages.add(question.passage_id)
+
         result = ask_question(
             translator,
             index,
             config.count,
             summary.correct,
-            problem,
+            question,
         )
         updated_correct = summary.correct + int(result.is_correct)
         summary = replace(

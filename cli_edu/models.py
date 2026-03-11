@@ -6,19 +6,24 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class Problem:
+class Question:
     prompt: str
-    answer: int
+    accepted_answers: tuple[str, ...]
+    correct_answer: str
     skill: str
+    choices: tuple[str, ...] = ()
+    passage_id: str | None = None
+    passage_title: str | None = None
+    passage_text: str | None = None
 
 
-ProblemGenerator = Callable[[random.Random], Problem]
+QuestionGenerator = Callable[[random.Random], Question]
 
 
 @dataclass(frozen=True)
 class AgeLevel:
     label: str
-    generators: tuple[ProblemGenerator, ...]
+    generators: tuple[QuestionGenerator, ...]
 
 
 @dataclass(frozen=True)
@@ -28,6 +33,7 @@ class SessionConfig:
     max_age: int
     count: int
     locale: str = "en"
+    exercise_type: str = "math"
     seed: int | None = None
 
     @property

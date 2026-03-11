@@ -1,0 +1,272 @@
+[
+  {
+    "id": "en_garden_morning",
+    "min_age": 4,
+    "max_age": 5,
+    "title": "A Morning in the Garden",
+    "passage": "Luca puts on his red boots and walks into the garden. He sees one yellow flower, two green frogs, and a tiny brown snail. Luca fills a blue watering can and gives the flower a drink. Then he waves goodbye to the frogs and goes inside for lunch.",
+    "questions": [
+      {
+        "prompt": "What color are Luca's boots?",
+        "choices": ["Red", "Blue", "Green", "Brown"],
+        "answer_index": 0,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What did Luca use to water the flower?",
+        "choices": ["A bucket", "A hose", "A watering can", "A cup"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What did Luca do after watering the flower?",
+        "choices": ["He took a nap", "He waved to the frogs", "He picked the flower", "He ran to school"],
+        "answer_index": 1,
+        "skill": "skill.reading_sequence"
+      }
+    ]
+  },
+  {
+    "id": "en_lost_hat",
+    "min_age": 4,
+    "max_age": 5,
+    "title": "Mina's Hat",
+    "passage": "Mina brings her purple hat to the park. A gust of wind blows it under a bench. Mina looks near the slide, near the swings, and then under the bench. She smiles when she finds the hat. After that, she puts it on and eats an apple with her dad.",
+    "questions": [
+      {
+        "prompt": "What color is Mina's hat?",
+        "choices": ["Purple", "Orange", "Black", "White"],
+        "answer_index": 0,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "Where was the hat?",
+        "choices": ["On the slide", "Under a bench", "In a tree", "By the gate"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "How did Mina probably feel when she found the hat?",
+        "choices": ["Sleepy", "Angry", "Happy", "Cold"],
+        "answer_index": 2,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
+    "id": "en_library_card",
+    "min_age": 6,
+    "max_age": 7,
+    "title": "The New Library Card",
+    "passage": "Ethan got his first library card on Saturday. He chose a book about space and another book about dinosaurs. At home, he read the space book first because he wanted to learn about the moon. On Sunday, he told his grandmother three facts from the book and asked if they could visit the library again next week.",
+    "questions": [
+      {
+        "prompt": "When did Ethan get his library card?",
+        "choices": ["Friday", "Saturday", "Sunday", "Monday"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "Why did Ethan read the space book first?",
+        "choices": ["It was shorter", "It had funny pictures", "He wanted to learn about the moon", "His grandmother chose it"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What is the best main idea of the passage?",
+        "choices": ["Ethan dislikes dinosaurs", "Ethan enjoys learning from library books", "Libraries are open only on weekends", "Grandmothers write space books"],
+        "answer_index": 1,
+        "skill": "skill.reading_main_idea"
+      }
+    ]
+  },
+  {
+    "id": "en_rainy_race",
+    "min_age": 6,
+    "max_age": 7,
+    "title": "The Rainy Race",
+    "passage": "Tara and Ben planned a scooter race in the driveway, but rain began to fall just after breakfast. Instead of racing outside, they used tape to make a track across the living room rug. They pushed toy cars around the turns and timed each lap with a kitchen timer. Ben won the first race, and Tara won the second.",
+    "questions": [
+      {
+        "prompt": "Why did Tara and Ben stay inside?",
+        "choices": ["It was too windy", "The driveway was being cleaned", "Rain started falling", "Their scooters were broken"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What did they race indoors?",
+        "choices": ["Scooters", "Toy cars", "Bicycles", "Paper planes"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What can you tell about Tara and Ben?",
+        "choices": ["They gave up easily", "They found a new way to play", "They did not like racing", "They forgot about the rain"],
+        "answer_index": 1,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
+    "id": "en_market_day",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "Saturday at the Market",
+    "passage": "On Saturday morning, Nia went to the farmers market with her uncle. First they bought warm bread from a baker who had woken up before sunrise. Next they tasted slices of pear from a fruit stall. Nia used her own coins to buy a small jar of honey. Before going home, she wrote down the name of a cheese she wanted to try next time.",
+    "questions": [
+      {
+        "prompt": "What did Nia buy with her own coins?",
+        "choices": ["Warm bread", "A jar of honey", "A pear", "A piece of cheese"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "Which event happened first?",
+        "choices": ["Nia wrote down the cheese name", "Nia bought honey", "Nia and her uncle bought bread", "Nia tasted pear slices"],
+        "answer_index": 2,
+        "skill": "skill.reading_sequence"
+      },
+      {
+        "prompt": "Why did Nia write down the cheese name?",
+        "choices": ["She wanted to remember it for later", "She needed it for school", "Her uncle told her to copy it", "She planned to sell cheese"],
+        "answer_index": 0,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
+    "id": "en_rooftop_garden",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "The Rooftop Garden",
+    "passage": "Ms. Flores turned the flat roof of her apartment building into a small garden. She used light boxes filled with soil so the roof would stay safe. Her neighbors helped plant tomatoes, basil, and sunflowers. During summer, the garden became a quiet place to read and talk. In autumn, everyone shared the tomatoes in soups and sandwiches.",
+    "questions": [
+      {
+        "prompt": "Why did Ms. Flores use light boxes?",
+        "choices": ["They were cheaper than seeds", "They made the roof safer", "They kept birds away", "They helped plants grow faster"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What was the garden used for during summer?",
+        "choices": ["Playing soccer", "Storing bicycles", "Reading and talking", "Washing clothes"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What is the meaning of shared in the last sentence?",
+        "choices": ["Threw away", "Kept secret", "Enjoyed together", "Painted carefully"],
+        "answer_index": 2,
+        "skill": "skill.reading_vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "en_robot_club",
+    "min_age": 10,
+    "max_age": 11,
+    "title": "After-School Robot Club",
+    "passage": "At West Hill School, the robot club met every Tuesday in the science lab. The students were building a machine that could sort recycled objects by shape. Their first design moved too slowly, so they replaced the small wheels with larger ones and changed the code that controlled the motor. By the end of the month, the robot could separate cans, boxes, and plastic bottles in less than a minute.",
+    "questions": [
+      {
+        "prompt": "What problem did the students have with their first design?",
+        "choices": ["It was too expensive", "It moved too slowly", "It was too noisy", "It could not detect colors"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "How did the students improve the robot?",
+        "choices": ["They painted it bright colors", "They gave it a new name", "They changed the wheels and the code", "They added a second battery only"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What is the main idea of the passage?",
+        "choices": ["Robots belong only in factories", "The students improved a robot through testing and changes", "Science labs should be open every day", "Plastic bottles are harder to sort than boxes"],
+        "answer_index": 1,
+        "skill": "skill.reading_main_idea"
+      }
+    ]
+  },
+  {
+    "id": "en_night_walk",
+    "min_age": 10,
+    "max_age": 11,
+    "title": "The Night Walk",
+    "passage": "During a camping trip, Omar's family joined a guided night walk in the forest. The guide asked everyone to turn off their flashlights for one minute and listen. Omar heard leaves rustling, an owl calling, and water moving over stones. At first he felt nervous in the dark, but then he noticed how much more he could hear when he stayed still. Later he wrote in his journal that the quiet minute was the most surprising part of the trip.",
+    "questions": [
+      {
+        "prompt": "Why did the guide ask everyone to turn off their flashlights?",
+        "choices": ["To save battery power", "To help everyone listen carefully", "To look at the stars", "To avoid waking other campers"],
+        "answer_index": 1,
+        "skill": "skill.reading_inference"
+      },
+      {
+        "prompt": "How did Omar's feelings change during the walk?",
+        "choices": ["He was excited, then bored", "He was nervous, then more comfortable", "He was sleepy, then angry", "He was calm, then frightened"],
+        "answer_index": 1,
+        "skill": "skill.reading_sequence"
+      },
+      {
+        "prompt": "What does rustling most likely mean in the passage?",
+        "choices": ["Shining brightly", "Moving with a soft sound", "Breaking into pieces", "Running very fast"],
+        "answer_index": 1,
+        "skill": "skill.reading_vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "en_bridge_project",
+    "min_age": 12,
+    "max_age": 14,
+    "title": "The Bridge Project",
+    "passage": "A group of students in a design class were asked to build a model bridge from paper, string, and glue. Their teacher explained that the strongest bridge would not always be the one that used the most material. Instead, the students needed to think carefully about shape and balance. One team tested three different designs and recorded how many books each bridge could hold. Their final version supported twice as much weight as their first attempt because they had learned where the structure bent and where it stayed firm.",
+    "questions": [
+      {
+        "prompt": "What lesson did the teacher want the students to understand?",
+        "choices": ["Paper bridges should look beautiful", "Using more material always makes something stronger", "Shape and balance matter in design", "Glue is the most important building tool"],
+        "answer_index": 2,
+        "skill": "skill.reading_main_idea"
+      },
+      {
+        "prompt": "Why was the final bridge stronger?",
+        "choices": ["The team used metal parts", "The students learned from earlier tests", "The teacher built part of it", "The books were lighter"],
+        "answer_index": 1,
+        "skill": "skill.reading_inference"
+      },
+      {
+        "prompt": "What does structure mean in the last sentence?",
+        "choices": ["A classroom rule", "The way something is built", "A school subject", "A stack of books"],
+        "answer_index": 1,
+        "skill": "skill.reading_vocabulary"
+      }
+    ]
+  },
+  {
+    "id": "en_town_newsletter",
+    "min_age": 12,
+    "max_age": 14,
+    "title": "The Town Newsletter",
+    "passage": "When Sofia joined the youth council, she expected long meetings and formal speeches. Instead, the group spent most of its time solving practical problems in the town. One month they surveyed students about unsafe bike routes. The next month they wrote a short newsletter explaining the results and suggesting improvements, such as brighter crossing signs and clearer lane markings. Sofia discovered that careful listening and clear writing could help people pay attention to everyday issues that had been ignored for years.",
+    "questions": [
+      {
+        "prompt": "What was one thing the youth council suggested?",
+        "choices": ["Building a new library", "Brighter crossing signs", "Longer school days", "More town meetings"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "How was the real council work different from what Sofia expected?",
+        "choices": ["It involved practical problem-solving", "It was mostly silent reading", "It focused only on sports", "It required no writing"],
+        "answer_index": 0,
+        "skill": "skill.reading_inference"
+      },
+      {
+        "prompt": "What is the best main idea of the passage?",
+        "choices": ["Town councils should always publish newsletters", "Sofia learned that communication can help improve a community", "Bike routes are unsafe in every town", "Formal speeches are better than surveys"],
+        "answer_index": 1,
+        "skill": "skill.reading_main_idea"
+      }
+    ]
+  }
+]

@@ -4,10 +4,13 @@ import random
 
 import click
 
-from cli_edu.generator import build_problem_set, validate_config
+from cli_edu.generator import build_question_set, validate_config
 from cli_edu.i18n import get_translator
 from cli_edu.models import SessionConfig
 from cli_edu.session import run_session
+
+EXERCISE_TYPES = ("math", "reading", "mixed")
+
 
 def prompt_seed(translator) -> int | None:
     raw_value = click.prompt(
@@ -20,7 +23,20 @@ def prompt_seed(translator) -> int | None:
     return int(raw_value)
 
 
+def prompt_exercise_type(translator) -> str:
+    click.echo(f"1. {translator.t('exercise.math')}")
+    click.echo(f"2. {translator.t('exercise.reading')}")
+    click.echo(f"3. {translator.t('exercise.mixed')}")
+    selection = click.prompt(
+        translator.t("app.prompt_exercise_type"),
+        type=click.IntRange(1, 3),
+        default=1,
+    )
+    return EXERCISE_TYPES[selection - 1]
+
+
 def prompt_custom_config(translator, locale: str) -> SessionConfig:
+    exercise_type = prompt_exercise_type(translator)
     target_age = click.prompt(
         translator.t("app.prompt_target_age"),
         type=click.IntRange(4, 14),
@@ -48,6 +64,7 @@ def prompt_custom_config(translator, locale: str) -> SessionConfig:
         max_age=max_age,
         count=count,
         locale=locale,
+        exercise_type=exercise_type,
         seed=seed,
     )
 
@@ -93,6 +110,16 @@ def preset_options(locale: str) -> dict[int, tuple[str, SessionConfig | None]]:
 def prompt_for_config(translator, locale: str) -> SessionConfig:
     presets = preset_options(locale)
     click.secho(translator.t("app.choose_setup"), fg="blue", bold=True)
+    click.echo(f"1. {translator.t('exercise.math')}")
+    click.echo(f"2. {translator.t('exercise.reading')}")
+    click.echo(f"3. {translator.t('exercise.mixed')}")
+    exercise_type = click.prompt(
+        translator.t("app.prompt_exercise_type"),
+        type=click.IntRange(1, 3),
+        default=1,
+    )
+    selected_exercise_type = EXERCISE_TYPES[exercise_type - 1]
+    click.echo()
     for number, (label, _) in presets.items():
         click.echo(f"{number}. {label}")
 
@@ -119,6 +146,7 @@ def prompt_for_config(translator, locale: str) -> SessionConfig:
         max_age=preset.max_age,
         count=count,
         locale=locale,
+        exercise_type=selected_exercise_type,
         seed=seed,
     )
 
@@ -129,6 +157,7 @@ def build_config_from_args(
     max_age: int | None,
     count: int | None,
     locale: str,
+    exercise_type: str,
     seed: int | None,
 ) -> SessionConfig:
     target_age = age if age is not None else 9
@@ -138,6 +167,7 @@ def build_config_from_args(
         max_age=max_age if max_age is not None else target_age,
         count=count if count is not None else 5,
         locale=locale,
+        exercise_type=exercise_type,
         seed=seed,
     )
 
@@ -148,6 +178,7 @@ def build_config_from_args(
 @click.option("--max-age", type=click.IntRange(4, 14), help="Upper age bound.")
 @click.option("--count", type=click.IntRange(1, 20), help="Number of questions.")
 @click.option("--locale", default="en", help="Locale to use. Supported: en, it.")
+@click.option("--exercise-type", default="math", help="Exercise type. Supported: math, reading, mixed.")
 @click.option("--seed", type=int, help="Random seed for repeatable sessions.")
 def main(
     age: int | None,
@@ -155,6 +186,7 @@ def main(
     max_age: int | None,
     count: int | None,
     locale: str,
+    exercise_type: str,
     seed: int | None,
 ) -> None:
     try:
@@ -162,7 +194,9 @@ def main(
     except ValueError as error:
         raise click.ClickException(str(error)) from error
 
-    if all(value is None for value in (age, min_age, max_age, count, seed)):
+    if all(
+        value is None for value in (age, min_age, max_age, count, seed)
+    ) and exercise_type == "math":
         config = prompt_for_config(translator, translator.locale)
     else:
         config = build_config_from_args(
@@ -171,6 +205,7 @@ def main(
             max_age,
             count,
             translator.locale,
+            exercise_type,
             seed,
         )
 
@@ -180,5 +215,5 @@ def main(
         raise click.ClickException(str(error)) from error
 
     rng = random.Random(validated.seed)
-    problems = build_problem_set(rng, validated, translator)
-    run_session(problems, validated, translator)
+    questions = build_question_set(rng, validated, translator)
+    run_session(questions, validated, translator)
