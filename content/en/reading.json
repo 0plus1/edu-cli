@@ -162,6 +162,114 @@
     ]
   },
   {
+    "id": "en_museum_hunt",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "The Museum Treasure Hunt",
+    "passage": "Sara's class visited the city museum for a treasure hunt. Each team had a card with clues about objects to find. Sara quickly recognized an old clock because it had a moon painted on its face. Later her group found a small suit of armor and a model ship. At the end, the guide gave everyone a key-shaped sticker.",
+    "questions": [
+      {
+        "prompt": "What did Sara recognize right away?",
+        "choices": ["A small suit of armor", "An old clock", "A model ship", "A golden key"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "Why did Sara recognize the clock?",
+        "choices": ["It had a moon painted on it", "It was making a loud sound", "It was near the door", "The guide pointed at it"],
+        "answer_index": 0,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What did everyone receive at the end of the visit?",
+        "choices": ["A pencil", "A free ticket", "A key-shaped sticker", "A map of the museum"],
+        "answer_index": 2,
+        "skill": "skill.reading_sequence"
+      }
+    ]
+  },
+  {
+    "id": "en_paper_boats",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "The Paper Boat Race",
+    "passage": "During recess, Amir and Lea built paper boats in the school yard. They placed the boats in a long stream of rainwater. Lea's boat moved quickly, but it bent at one turn. Amir gave her a paper clip to hold the edge in place. After the restart, Lea's boat reached the finish line at the same time as Amir's.",
+    "questions": [
+      {
+        "prompt": "Where did Amir and Lea hold the race?",
+        "choices": ["In the park", "In the school yard", "In the gym", "In the library"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What problem did Lea's boat have?",
+        "choices": ["It sank immediately", "It was too slow", "It bent at one turn", "It was too small"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What can you infer about Amir?",
+        "choices": ["He wanted to win alone", "He helped Lea", "He did not like races", "He was upset about the rain"],
+        "answer_index": 1,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
+    "id": "en_neighborhood_bakery",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "The Neighborhood Bakery",
+    "passage": "Every Wednesday, Emma walked past a small bakery on her way to school. One day the baker showed her how to braid sweet dough. Emma noticed that the shop smelled like orange and cinnamon. Before she left, the baker gave her a small piece of dough to bake at home with her mother. That evening Emma copied the recipe into a yellow notebook.",
+    "questions": [
+      {
+        "prompt": "What did the baker show Emma?",
+        "choices": ["How to decorate a cake", "How to braid dough", "How to use the large oven", "How to sell bread"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What did the shop smell like?",
+        "choices": ["Lemon and mint", "Chocolate and milk", "Orange and cinnamon", "Apple and vanilla"],
+        "answer_index": 2,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "Why did Emma write the recipe in her notebook?",
+        "choices": ["To remember it", "To give it back to the baker", "To bring it to school the next day", "Because the notebook was empty"],
+        "answer_index": 0,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
+    "id": "en_bird_station",
+    "min_age": 8,
+    "max_age": 9,
+    "title": "The Bird Station",
+    "passage": "On the balcony at home, Diego built a small bird-watching station. He hung seeds in a clear container and placed a bowl of water beside a tall plant. Every morning he marked on a sheet of paper how many sparrows he saw. One day a robin arrived, and Diego called his sister to come and see it. After that, they decided to watch the birds together before school.",
+    "questions": [
+      {
+        "prompt": "What did Diego mark down every morning?",
+        "choices": ["The weather", "How many sparrows he saw", "His homework", "The plants to water"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What special thing happened one day?",
+        "choices": ["The container broke", "A robin arrived", "The water ran out", "The seeds disappeared"],
+        "answer_index": 1,
+        "skill": "skill.reading_recall"
+      },
+      {
+        "prompt": "What does the ending suggest?",
+        "choices": ["Diego got tired of bird-watching", "Diego's sister does not like birds", "Bird-watching became a shared activity", "Birds come only in the evening"],
+        "answer_index": 2,
+        "skill": "skill.reading_inference"
+      }
+    ]
+  },
+  {
     "id": "en_robot_club",
     "min_age": 10,
     "max_age": 11,
